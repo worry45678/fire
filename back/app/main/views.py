@@ -1,4 +1,5 @@
 import json
+import pandas as pd
 from . import main
 from datetime import datetime
 from flask import render_template, session, redirect, url_for, request, send_from_directory, jsonify, flash, request
@@ -24,7 +25,15 @@ def test():
 @main.route('/check', methods=['POST'])
 def check():
     params = json.loads(request.data.decode('utf-8'))
+    print(params)
     id = params['id']
-    print(id)
     mongo.db.check_log.insert_one({'id': int(id), 'date': datetime.now(), 'user': 'ww'})
     return jsonify({'message': 'ok'})
+
+@main.route('/check_collect')
+def check_collect():
+    params = json.loads(request.data.decode('utf-8'))
+    df = pd.DataFrame(list(db.check_log.find()))
+    df['date2'] = df.date.apply(lambda x: x.date())
+    df = df.pivot_table(index='date2', columns='user', values='id', aggfunc='count')
+    return jsonify({'index': df.index.tolist(), 'columns': df.columns.tolist(), 'table': df.to_dict('records')})
