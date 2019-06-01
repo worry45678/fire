@@ -39,7 +39,7 @@ def message_init():
 @auths.route('/message/content/<string:id>')
 @multi_auth.login_required
 def message_content(id):
-    return jsonify(f'id:{id}')
+    return jsonify('id: %s' %id)
 
 @auths.route('/message/has_read/<string:id>')
 @multi_auth.login_required
