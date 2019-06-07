@@ -75,3 +75,4 @@ export const addDevice = (params) => {
     data: params
   })
 }
+

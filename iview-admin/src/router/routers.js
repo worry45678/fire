@@ -51,34 +51,6 @@ export default [
     ]
   },
   {
-    path: '',
-    name: 'doc',
-    meta: {
-      title: '文档',
-      href: 'https://lison16.github.io/iview-admin-doc/#/',
-      icon: 'ios-book'
-    }
-  },
-  {
-    path: '/join',
-    name: 'join',
-    component: Main,
-    meta: {
-      hideInBread: true
-    },
-    children: [
-      {
-        path: 'join_page',
-        name: 'join_page',
-        meta: {
-          icon: '_qq',
-          title: 'QQ群'
-        },
-        component: () => import('@/view/join-page.vue')
-      }
-    ]
-  },
-  {
     path: '/message',
     name: 'message',
     component: Main,
@@ -222,7 +194,8 @@ export default [
     name: 'update',
     meta: {
       icon: 'md-cloud-upload',
-      title: '数据上传'
+      title: '数据上传',
+      access: ['super_admin']
     },
     component: Main,
     children: [
@@ -263,6 +236,15 @@ export default [
           title: '设备管理'
         },
         component: () => import('@/view/fire/devices.vue')
+      },
+      {
+        path: 'report',
+        name: 'report',
+        meta: {
+          icon: 'md-list-box',
+          title: '汇总报表'
+        },
+        component: () => import('@/view/fire/report.vue')
       }
     ]
   },
@@ -271,6 +253,7 @@ export default [
     name: 'excel',
     meta: {
       icon: 'ios-stats',
+      access: ['super_admin'],
       title: 'EXCEL导入导出'
     },
     component: Main,
@@ -299,7 +282,8 @@ export default [
     path: '/tools_methods',
     name: 'tools_methods',
     meta: {
-      hideInBread: true
+      hideInBread: true,
+      access: ['super_admin']
     },
     component: Main,
     children: [
@@ -319,7 +303,8 @@ export default [
     path: '/i18n',
     name: 'i18n',
     meta: {
-      hideInBread: true
+      hideInBread: true,
+      hideInMenu: true
     },
     component: Main,
     children: [
@@ -377,7 +362,8 @@ export default [
     path: '/directive',
     name: 'directive',
     meta: {
-      hideInBread: true
+      hideInBread: true,
+      access: ['super_admin']
     },
     component: Main,
     children: [
@@ -397,7 +383,8 @@ export default [
     name: 'multilevel',
     meta: {
       icon: 'md-menu',
-      title: '多级菜单'
+      title: '多级菜单',
+      access: ['super_admin']
     },
     component: Main,
     children: [

@@ -39,7 +39,7 @@ def check_collect():
     df = df.pivot_table(index='date2', columns='user', values='id', aggfunc='count')
     return jsonify({'index': df.index.tolist(), 'columns': df.columns.tolist(), 'table': df.to_dict('records')})
 
-@main.route('/devices', methods=['GET', 'PUT', 'DELETE', 'UPDATE'])
+@main.route('/devices', methods=['GET', 'PUT', 'DELETE', 'POST'])
 def devices():
     if request.method == 'GET':
         devices = list(mongo.db.devices.find())
@@ -50,5 +50,7 @@ def devices():
         mongo.db.devices.delete_one({'_id': oid})
         return '删除成功'
     if request.method == "PUT":
-        mongo.db.devices.insert_one(request.json)
+        oid = ObjectId(request.json.get('_id'))
+        del request.json['_id']
+        mongo.db.devices.update_one({'_id': oid}, {'$set': request.json}, upsert=True)
         return '添加成功'
