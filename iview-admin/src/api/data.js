@@ -49,3 +49,29 @@ export const getTreeSelectData = () => {
     method: 'get'
   })
 }
+
+// 获取设备列表
+export const getDevicesList = () => {
+  return axios.request({
+    url: 'devices',
+    method: 'get'
+  })
+}
+
+// 删除设备
+export const deleteDevice = (params) => {
+  return axios.request({
+    url: 'devices',
+    method: 'delete',
+    params: params
+  })
+}
+
+// 添加设备
+export const addDevice = (params) => {
+  return axios.request({
+    url: 'devices',
+    method: 'put',
+    data: params
+  })
+}

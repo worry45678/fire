@@ -247,6 +247,26 @@ export default [
     ]
   },
   {
+    path: '/fire',
+    name: 'fire',
+    meta: {
+      icon: 'ios-stats',
+      title: '点检管理'
+    },
+    component: Main,
+    children: [
+      {
+        path: 'devices',
+        name: 'devices',
+        meta: {
+          icon: 'md-add',
+          title: '设备管理'
+        },
+        component: () => import('@/view/fire/devices.vue')
+      }
+    ]
+  },
+  {
     path: '/excel',
     name: 'excel',
     meta: {
