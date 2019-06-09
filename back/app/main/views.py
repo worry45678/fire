@@ -20,12 +20,15 @@ def log():
     devices = list(mongo.db.devices.find({}))
     now = datetime.now()
     for i,v  in enumerate(devices):
-        if mongo.db.check_log.find_one({'device_id': ObjectId(v['_id']),'date':{'$gt': datetime(now.year, now.month, now.day)}}):
+        check_log = mongo.db.check_log.find_one({'device_id': ObjectId(v['_id']),'date':{'$gt': datetime(now.year, now.month, now.day)}})
+        if check_log:
             devices[i]['isCheck'] = True
-            devices[i]['check_date'] = mongo.db.check_log.find_one({'device_id': ObjectId(v['_id']),'date':{'$gt': datetime(now.year, now.month, now.day)}})['date'].strftime('%H:%M')
+            devices[i]['check_date'] = check_log['date'].strftime('%H:%M')
+            devices[i]['result'] = RESULT[check_log['result']]
         else:
             devices[i]['isCheck'] = False
-            devices[i]['check_date'] = '待检查'
+            devices[i]['check_date'] = ''
+            devices[i]['result'] = '待检查'
     return jsonify({'data': devices})
 
 @main.route('/checklog', methods=['GET'])
