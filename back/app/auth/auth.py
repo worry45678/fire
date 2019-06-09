@@ -13,6 +13,7 @@ def get_password(userName):
     if not user:
         return None
     g.user = user['name']
+    #g.user_id = mongo.db.users.find_one({'name': g.user})['_id']
     return user['pwd']
 
 
@@ -25,5 +26,6 @@ def verify_token(token):
         return False
     if 'username' in data:
         g.user = data['username']
+        #g.user_id = mongo.db.users.find_one({'name': g.user})['_id']
         return True
     return False

@@ -75,7 +75,8 @@ export default [
     name: 'components',
     meta: {
       icon: 'logo-buffer',
-      title: '组件'
+      title: '组件',
+      access: ['developer']
     },
     component: Main,
     children: [
@@ -195,7 +196,7 @@ export default [
     meta: {
       icon: 'md-cloud-upload',
       title: '数据上传',
-      access: ['super_admin']
+      access: ['developer']
     },
     component: Main,
     children: [
@@ -233,9 +234,19 @@ export default [
         name: 'devices',
         meta: {
           icon: 'md-add',
-          title: '设备管理'
+          title: '设备管理',
+          access: ['super_admin', 'developer']
         },
         component: () => import('@/view/fire/devices.vue')
+      },
+      {
+        path: 'checklog',
+        name: 'checklog',
+        meta: {
+          icon: 'md-list-box',
+          title: '巡检记录'
+        },
+        component: () => import('@/view/fire/checklog.vue')
       },
       {
         path: 'report',
@@ -253,7 +264,7 @@ export default [
     name: 'excel',
     meta: {
       icon: 'ios-stats',
-      access: ['super_admin'],
+      access: ['developer'],
       title: 'EXCEL导入导出'
     },
     component: Main,
@@ -283,7 +294,7 @@ export default [
     name: 'tools_methods',
     meta: {
       hideInBread: true,
-      access: ['super_admin']
+      access: ['developer']
     },
     component: Main,
     children: [
@@ -363,7 +374,7 @@ export default [
     name: 'directive',
     meta: {
       hideInBread: true,
-      access: ['super_admin']
+      access: ['developer']
     },
     component: Main,
     children: [
@@ -384,7 +395,7 @@ export default [
     meta: {
       icon: 'md-menu',
       title: '多级菜单',
-      access: ['super_admin']
+      access: ['developer']
     },
     component: Main,
     children: [
@@ -401,7 +412,7 @@ export default [
         path: 'level_2_2',
         name: 'level_2_2',
         meta: {
-          access: ['super_admin'],
+          access: ['developer'],
           icon: 'md-funnel',
           showAlways: true,
           title: '二级-2'

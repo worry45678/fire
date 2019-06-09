@@ -1,40 +1,56 @@
 <template>
-  <div class="hello">
-    // 用于输入内容的input
-    <input v-model="message">
-    // 将获取到的信息画到画布上
-    <canvas id="msg"></canvas>
+  <div>
+    <Row class="margin-top-10">
+      <DatePicker type="month" v-model="searchDate" placeholder="Select month" style="width: 200px"></DatePicker>
+      <Button @click="submit" icon="md-search" type="primary" clearable>查询</Button>
+      <Table :columns="tableTitle" :data="tableData" :loading="tableLoading"></Table>
+    </Row>
   </div>
 </template>
 
 <script>
-// 引入qrcode
-import QRCode from "qrcode";
+import { getReport } from "@/api/data";
 export default {
+  name: "report",
   data() {
+    const now = new Date()
     return {
-      message: ""
+      searchDate: now,
+      tableLoading: false,
+      tableData: [],
+      tableTitle: [
+        {
+          title: '设备名称',
+          key: 'name'
+        },
+        {
+          title: '应检次数',
+          key: '应检次数'
+        },
+        {
+          title: '实检次数',
+          key: '实检次数'
+        },
+        {
+          title: '巡检率',
+          key: '巡检率'
+        }
+      ]
     };
   },
-  watch: {
-    // 通过监听获取数据
-    message(val) {
-      // 打印获取到的数据
-      console.log(val);
-      // 获取页面的canvas
-      var msg = document.getElementById("msg");
-      // 将获取到的数据（val）画到msg（canvas）上
-      QRCode.toCanvas(msg, val, function(error) {
-        console.log(error);
-      });
+  methods: {
+    fetchData() {
+      getReport({date: this.searchDate}).then(res => {
+        this.tableData = res.data.data
+        console.log(res.data)
+      })
+    },
+    submit() {
+      this.fetchData()
     }
+  },
+  mounted() {
+    this.fetchData()
   }
 };
 </script>
-
-<style>
-#msg {
-  width: 200px;
-  height: 200px;
-}
-</style>

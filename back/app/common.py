@@ -36,3 +36,9 @@ class ObjectIdEncoder(json.JSONEncoder):
         if isinstance(o, date):
             return o.strftime('%Y-%m-%d %H:%M')
         return json.JSONEncoder.default(self,o)
+
+RESULT = {
+    1: '正常',
+    2: '过期',
+    3: '损坏'
+}

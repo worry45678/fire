@@ -76,3 +76,20 @@ export const addDevice = (params) => {
   })
 }
 
+// 检查记录
+export const getCheckLog = (params) => {
+  return axios.request({
+    url: 'checklog',
+    method: 'get',
+    params: params
+  })
+}
+
+// 获取报表
+export const getReport = (params) => {
+  return axios.request({
+    url: 'report',
+    method: 'get',
+    params: params
+  })
+}
