@@ -92,6 +92,8 @@ def report():
     days = min((datetime.now() - datetime(date.year, date.month, 1)).days, calendar.monthrange(date.year, date.month)[1])
     query = {'date': {'$gte': datetime(date.year, date.month, 1), '$lt': datetime(date.year, date.month, days, 23, 59, 59)}}
     df = pd.DataFrame(list(mongo.db.check_log.find(query))) # 当月检查记录
+    if df.size == 0:
+        return jsonify({'data': []})
     df2 = pd.DataFrame(list(mongo.db.devices.find())) # 设备表
     df2.index = df2['_id']
     df['设备名称'] = df['device_id'].apply(lambda x: df2.loc[x, 'name'])
